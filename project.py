@@ -2,22 +2,23 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.impute import SimpleImputer
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
 
 # Load dataset
 file_path = r"E:\CODSOFT\Titanic-Dataset.csv"
-data = pd.read_csv(file_path)
+df = pd.read_csv(file_path, encoding='latin1')
+
 
 # Drop irrelevant columns
-data = data.drop(['PassengerId', 'Name', 'Ticket', 'Cabin'], axis=1)
+data = df.drop(['PassengerId', 'Name', 'Ticket', 'Cabin'], axis=1)
 
 # Handle missing values
 imputer = SimpleImputer(strategy='most_frequent')
 data[['Age', 'Embarked']] = imputer.fit_transform(data[['Age', 'Embarked']])
 
 # Encode categorical variables
-label_enc = LabelEncoder()
 data['Sex'] = label_enc.fit_transform(data['Sex'])
 data['Embarked'] = label_enc.fit_transform(data['Embarked'])
 
